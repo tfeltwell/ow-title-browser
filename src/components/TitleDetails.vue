@@ -3,12 +3,12 @@
     elevation="1"
   >
     <v-card-title>
-      <h1> {{ title_number }}</h1>
+      <h1> {{ details.number }}</h1>
       <v-chip
         color="green"
         text-color="white"
       >
-        {{  title_class }}
+        {{  details.tenure }}
       </v-chip>
     </v-card-title>
     <v-card-text>
@@ -19,17 +19,15 @@
   </v-card>
 </template>
 
-<script setup>
-  defineProps({
-    title_number: {
-      type: String,
-      required: false
+<script>
+  export default {
+    props: {
+      details: {
+        type: Object,
+        required: true,
+      },
     },
-    title_class: {
-      type: String,
-      required: false
-    }
-  })
+  }
 </script>
 
 <style scoped>

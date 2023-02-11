@@ -4,12 +4,22 @@
     elevation="1"
   >
     Map
+    {{ x }}, {{ y }}
+    {{ address }}
   </v-sheet>
 </template>
 
 <script setup>
   defineProps({
-    msg: {
+    x: {
+      type: String,
+      required: false
+    },
+    y: {
+      type: String,
+      required: false
+    },
+    address: {
       type: String,
       required: false
     }
