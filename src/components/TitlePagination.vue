@@ -1,10 +1,10 @@
 <template>
   <v-row>
     <v-col>
-      <v-btn>Previous page</v-btn>
+      <v-btn @click="decreasePage()">Previous Page</v-btn>
     </v-col>
     <v-col>
-      <v-btn>Next page</v-btn>
+      <v-btn @click="increasePage()">Next Page</v-btn>
     </v-col>
   </v-row>
 </template>
@@ -12,14 +12,16 @@
 <script>
 
 export default {
-  data () {
-    return {
-      
+  methods: {
+    decreasePage() {
+      this.$emit("updatePagePos", -1);
+    },
+    increasePage() {
+      this.$emit("updatePagePos", 1);
     }
   }
 }
 </script>
-
 
 <style scoped>
 

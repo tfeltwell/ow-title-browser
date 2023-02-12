@@ -5,15 +5,7 @@
         <TitleTable :data="currentPage"/>
       </v-col>
     </v-row>
-    <TitlePagination />
-    <v-row>
-      <v-col>
-        <v-btn @click="decreasePage()">Previous Page</v-btn>
-      </v-col>
-      <v-col>
-        <v-btn @click="increasePage()">Next Page</v-btn>
-      </v-col>
-    </v-row>
+    <TitlePagination @updatePagePos="updatePagePos" />
   </v-container>
 
 </template>
@@ -59,9 +51,9 @@
           })
           .catch(err => console.error(err));
       },
-      // redirectDetail(titleNumber) {
-      //   this.$router.push({ path: '/titles/'+titleNumber });
-      // },
+      updatePagePos(change) {
+        change > 0 ? this.increasePage() : this.decreasePage();
+      },  
       decreasePage() {
         // decrease page if not aleady at 0
         if (this.pagePos != 0) {
