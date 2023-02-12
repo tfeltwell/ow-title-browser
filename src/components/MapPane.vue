@@ -1,6 +1,6 @@
 <template>
-  <GoogleMap :api-key="mapKey" style="width: 100%; height: 500px" :center="center" :zoom="15">
-    <Marker :options="{ position: center, zoom: 20 }" />
+  <GoogleMap :api-key="mapKey" style="width: 100%; height: 500px" :center="center" :zoom="18">
+    <Marker :options="{ position: center }" />
   </GoogleMap>
   lat: {{ y }} lng: {{ x }}
 </template>
@@ -22,6 +22,7 @@ export default defineComponent({
   },
   components: { 
     GoogleMap,
+    // eslint-disable-next-line vue/no-reserved-component-names
     Marker
   },
   setup(props) {
