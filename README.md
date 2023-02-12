@@ -1,17 +1,12 @@
-# vue3-base
+# OW-Technical Task
 
-This template should help get you started developing with Vue 3 in Vite.
+Small Vue webapp for viewing property titles based on the Land Registry data format. You are able to view a list of property titles and click on them to see more details, including a Googe Maps pin of its location. 
 
-Vitest: https://www.vuemastery.com/blog/getting-started-with-vitest/
-Cypress: https://www.lambdatest.com/blog/cypress-end-to-end-testing/ 
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## Technologies used
+* Framework: Vue3 with Vuetify3
+* Build tool: Vite
+* Testing: Vitest (Unit), Cypress (E2E)
+* Linting: ESLint
 
 ## Project Setup
 
