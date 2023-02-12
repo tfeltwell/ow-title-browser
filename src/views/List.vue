@@ -22,35 +22,15 @@
       TitlePagination
     },
     setup() {
-      const data = ref(null);
-      const loading = ref(true);
-      const error = ref(null);
       const pageSize = ref(10);
       const pagePos = ref(0);
 
       return {
-        data,
-        loading,
-        error,
         pageSize,
         pagePos
       };
     },
     methods: {
-      async fetchData() {
-        this.loading = true;
-        const options = {method: 'GET'};
-        console.log('fetching inside list.vue');
-
-        fetch('https://owfetechtask.blob.core.windows.net/titledata/testdata.json', options)
-          .then(response => response.json())
-          .then((response) => {
-            this.$store.commit('initTitles', response)
-            this.data = response;
-            this.loading = false;
-          })
-          .catch(err => console.error(err));
-      },
       updatePagePos(change) {
         change > 0 ? this.increasePage() : this.decreasePage();
       },  
@@ -65,15 +45,15 @@
         }
       },
       increasePage() {
-        // increase if new pagePos will be less than < data.length
-        if ((this.pagePos + this.pageSize) < this.data.length) {
+        // increase if new pagePos will be less than < getAllTitles.length
+        if ((this.pagePos + this.pageSize) < this.getAllTitles.length) {
           this.pagePos += this.pageSize;
         }
       }
     },
 
     mounted() {
-      this.fetchData();
+      this.$store.dispatch('loadData')
     },
 
     computed: {
@@ -81,8 +61,8 @@
         'getAllTitles'
       ]),
       currentPage() {
-        return this.data ? 
-          this.data.slice(this.pagePos, (this.pagePos+this.pageSize)) : {};
+        return this.getAllTitles ? 
+          this.getAllTitles.slice(this.pagePos, (this.pagePos+this.pageSize)) : {};
       }
     }
     

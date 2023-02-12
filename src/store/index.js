@@ -28,11 +28,19 @@ export default createStore({
     },
   },
   mutations: {
-    initTitles (state, payload) {
-      state.titleList = payload;
+    updateData(state, data) {
+      state.titleList = data;
     }
   },
   actions: {
-
+    loadData (context) {
+      const options = {method: 'GET'};
+      console.log('loading data in vuex');
+      return fetch('https://owfetechtask.blob.core.windows.net/titledata/testdata.json', options)
+        .then(response => response.json())
+        .then(data => {
+          context.commit("updateData", data);
+        });
+    }
   }
 })
