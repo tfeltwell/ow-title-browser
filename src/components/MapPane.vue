@@ -1,13 +1,15 @@
 <template>
-  <GoogleMap :api-key="mapKey" style="width: 100%; height: 500px" :center="center" :zoom="18">
-    <Marker :options="{ position: center }" />
-  </GoogleMap>
-  lat: {{ y }} lng: {{ x }}
+  <template v-if="isDataLoaded">
+    <GoogleMap :api-key="mapKey" style="width: 100%; height: 500px" :center="centre" :zoom="18">
+      <Marker :options="{ position: centre }" />
+    </GoogleMap>
+  </template>
 </template>
 
 <script>
 import { defineComponent } from "vue";
 import { GoogleMap, Marker } from "vue3-google-map";
+import { mapGetters } from 'vuex'
 
 export default defineComponent({
   props: {
@@ -34,5 +36,18 @@ export default defineComponent({
       mapKey
     };
   },
+  computed: {
+    ...mapGetters([
+        'isDataLoaded',
+      ]),
+    centre() {
+      if (typeof this.y === 'undefined' || typeof this.x === 'undefined') {
+        return { lat: 0, lng: 0};
+      }
+      const value = { lat: parseFloat(this.y), lng: parseFloat(this.x) };
+      console.log('computed:', value, this.x, this.y);
+      return value;
+    }
+  }
 });
 </script>

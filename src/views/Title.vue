@@ -1,25 +1,23 @@
 <template>
   <v-container>
-    <v-row style="border: 1px solid #000;">
+    <v-row>
       <v-col>
         <v-btn to="/list">Back</v-btn>
       </v-col>
-      <v-col>route params: {{ $route.params.id }}</v-col>
-      <v-col>{{ titleDetails }}</v-col>
     </v-row>
     <v-row>
       <v-col>
         <TitleDetails 
           :details="{
-            number: titleDetails['Title Number'],
-            tenure: titleDetails['Tenure']
+            number: detail['Title Number'],
+            tenure: detail['Tenure']
           }"
         />
       </v-col>
       <v-col>
         <MapPane
-          :x="titleDetails['X']" 
-          :y="titleDetails['Y']" 
+          :x="detail['X']" 
+          :y="detail['Y']" 
         />
       </v-col>
     </v-row>
@@ -29,7 +27,7 @@
 <script lang="js">
 import TitleDetails from '../components/TitleDetails.vue';
 import MapPane from '../components/MapPane.vue';
-import store from '@/store'
+import { mapGetters } from 'vuex'
 
   export default {
     name: "TitleView",
@@ -38,26 +36,23 @@ import store from '@/store'
       MapPane,
     },
     computed: {
-      id() {
-        return this.$route.params.id.toString();
-      }
-    },
-    data () {
-      return {
-        // titleDetails: store.getters.getTitleByTitleNumber(this.id)
-        titleDetails: store.getters.getTitleByTitleNumber(this.$route.params.id.toString())
-      }
+      ...mapGetters([
+        'isDataLoaded',
+      ]),
+      detail() {
+        return this.$store.getters.getTitleByTitleNumber(this.$route.params.id.toString())
+      },
     },
     methods: {
-      async fetchTitle() {
-        console.log('Fetching new data for', this.$route.params.id.toString());
-        const routeId = this.$route.params.id.toString();
-        this.titleDetails = store.getters.getTitleByTitleNumber(routeId);
-        console.log(this.titleDetails['Title Number']);
-      }
+      checkData() {
+        if (!this.isDataLoaded) {
+          this.$store.dispatch('loadData');
+          console.log('data not loaded, dispatching');
+        }
+      },
     },
     mounted() {
-      this.fetchTitle();
+      this.checkData()
     }
   }
 </script>
