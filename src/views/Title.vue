@@ -26,7 +26,7 @@
   </v-container>
 </template>
 
-<script>
+<script lang="js">
 import TitleDetails from '../components/TitleDetails.vue';
 import MapPane from '../components/MapPane.vue';
 import store from '@/store'

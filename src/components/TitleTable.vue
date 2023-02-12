@@ -1,4 +1,5 @@
 <template>
+  {{ titleData }}
   <v-table>
     <thead>
       <tr>
@@ -27,47 +28,22 @@
 </template>
 
 <script>
-import { ref } from "vue";
-import { mapGetters } from 'vuex'
+import { reactive } from "vue";
 
 export default {
   name: "TitleTable",
-  setup() {
-    const data = ref(null);
-    const loading = ref(true);
-    const error = ref(null);
-
-    return {
-      data,
-      loading,
-      error
-    };
-  },
-
-  methods: {
-    async fetchData() {
-      this.loading = true;
-      const options = {method: 'GET'};
-
-      fetch('https://owfetechtask.blob.core.windows.net/titledata/testdata.json', options)
-        .then(response => response.json())
-        .then(response => this.$store.commit('initTitles', response))
-        .catch(err => console.error(err));
-    },
-    redirectDetail(titleNumber) {
-      this.$router.push({ path: '/titles/'+titleNumber });
+  props: {
+    titleData: {
+      type: Object,
+      required: true
     }
   },
+  setup(props) {
+    const titleData = reactive(props.titleData);
 
-  mounted() {
-    this.fetchData();
+    // eslint-disable-next-line vue/no-dupe-keys
+    return { titleData };
   },
-
-  computed: {
-    ...mapGetters([
-      'getAllTitles'
-    ])
-  }
 }
 </script>
 
