@@ -1,5 +1,4 @@
 <template>
-  {{ titleData }}
   <v-table>
     <thead>
       <tr>
@@ -38,11 +37,17 @@ export default {
       required: true
     }
   },
+  // Todo refactor - not using titleData anymore
   setup(props) {
     const titleData = reactive(props.data);
 
     return { titleData };
   },
+  methods: {
+    redirectDetail(titleNumber) {
+      this.$router.push({ path: '/titles/'+titleNumber });
+    },
+  }
 }
 </script>
 

@@ -6,8 +6,14 @@
       </v-col>
     </v-row>
     <TitlePagination />
-    <v-btn @click="decreasePage()">Dec</v-btn>
-    <v-btn @click="increasePage()">Inc</v-btn>
+    <v-row>
+      <v-col>
+        <v-btn @click="decreasePage()">Previous Page</v-btn>
+      </v-col>
+      <v-col>
+        <v-btn @click="increasePage()">Next Page</v-btn>
+      </v-col>
+    </v-row>
   </v-container>
 
 </template>
@@ -27,8 +33,8 @@
       const data = ref(null);
       const loading = ref(true);
       const error = ref(null);
-      const pageSize = 10;
-      let pagePos = 0;
+      const pageSize = ref(10);
+      const pagePos = ref(0);
 
       return {
         data,
@@ -53,9 +59,9 @@
           })
           .catch(err => console.error(err));
       },
-      redirectDetail(titleNumber) {
-        this.$router.push({ path: '/titles/'+titleNumber });
-      },
+      // redirectDetail(titleNumber) {
+      //   this.$router.push({ path: '/titles/'+titleNumber });
+      // },
       decreasePage() {
         // decrease page if not aleady at 0
         if (this.pagePos != 0) {
@@ -64,13 +70,11 @@
           } else {
             this.pagePos -= this.pageSize;
           }
-        } else {
-          console.log('cant decrease', this.pagePos);
         }
       },
       increasePage() {
-        // increase page if pagePos + pageSize < data.length
-        if (this.pagePos < this.data.length) {
+        // increase if new pagePos will be less than < data.length
+        if ((this.pagePos + this.pageSize) < this.data.length) {
           this.pagePos += this.pageSize;
         }
       }
@@ -85,12 +89,10 @@
         'getAllTitles'
       ]),
       currentPage() {
-        if (this.data) {
-          // slice uses array.length is end >= array.length
-          return this.data.slice(this.pagePos, (this.pagePos+this.pageSize));
-        }
-        return {}
+        return this.data ? 
+          this.data.slice(this.pagePos, (this.pagePos+this.pageSize)) : {};
       }
     }
+    
   }
 </script>
