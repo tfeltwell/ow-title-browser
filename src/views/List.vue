@@ -2,10 +2,12 @@
   <v-container>
     <v-row>
       <v-col>
-        <TitleTable :titleData="currentPage"/>
+        <TitleTable :data="currentPage"/>
       </v-col>
     </v-row>
     <TitlePagination />
+    <v-btn @click="decreasePage()">Dec</v-btn>
+    <v-btn @click="increasePage()">Inc</v-btn>
   </v-container>
 
 </template>
@@ -54,20 +56,23 @@
       redirectDetail(titleNumber) {
         this.$router.push({ path: '/titles/'+titleNumber });
       },
-      // paginateData() {
-      //   // return data array, selected from pagePos to pagePos+9 
-      //   // (or the end of the array)
-        
-      //   if(this.data) {
-      //     this.data.slice(0,9);
-      //     console.log('sliced currentData');
-      //   }
-      // },
       decreasePage() {
         // decrease page if not aleady at 0
+        if (this.pagePos != 0) {
+          if (this.pagePos - this.pageSize <= 0) {
+            this.pagePos = 0;
+          } else {
+            this.pagePos -= this.pageSize;
+          }
+        } else {
+          console.log('cant decrease', this.pagePos);
+        }
       },
       increasePage() {
         // increase page if pagePos + pageSize < data.length
+        if (this.pagePos < this.data.length) {
+          this.pagePos += this.pageSize;
+        }
       }
     },
 
@@ -81,8 +86,8 @@
       ]),
       currentPage() {
         if (this.data) {
-          return this.data.slice(this.pagePos,this.pagePos+this.pageSize);
-          // return this.data.slice(0, 9);
+          // slice uses array.length is end >= array.length
+          return this.data.slice(this.pagePos, (this.pagePos+this.pageSize));
         }
         return {}
       }

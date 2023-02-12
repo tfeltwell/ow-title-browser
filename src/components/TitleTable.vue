@@ -15,7 +15,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="title in getAllTitles" 
+      <tr v-for="title in data" 
         :key="title['Title Number']" 
         item-class="table-row"
         @click="redirectDetail(title['Title Number'])"
@@ -33,15 +33,14 @@ import { reactive } from "vue";
 export default {
   name: "TitleTable",
   props: {
-    titleData: {
+    data: {
       type: Object,
       required: true
     }
   },
   setup(props) {
-    const titleData = reactive(props.titleData);
+    const titleData = reactive(props.data);
 
-    // eslint-disable-next-line vue/no-dupe-keys
     return { titleData };
   },
 }
