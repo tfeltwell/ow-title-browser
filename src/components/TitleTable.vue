@@ -1,41 +1,33 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col>
-        <p v-if="loading">
-          Still loading...
-        </p>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col>
-        Title number 
-        <v-icon
-          color="green darken-2"
-        >
-          mdi-sort-alphabetical-ascending
-        </v-icon>
-      </v-col>
-      <v-col>
-        Class of title
-      </v-col>
-    </v-row>
-    <v-row v-for="title in getAllTitles" :key="title['Title Number']" >
-      <v-col>
-        {{ title['Title Number'] }}
-      </v-col>
-      <v-col>
-        <router-link :to="'/titles/'+title['Title Number']">
-          {{ title['Tenure'] }}
-        </router-link>
-      </v-col>
-    </v-row>
-
-  </v-container>
+  <v-table>
+    <thead>
+      <tr>
+        <th class="text-left">
+          Title number 
+          <v-icon color="green darken-2">
+            mdi-sort-alphabetical-ascending
+          </v-icon>
+        </th>
+        <th class="text-left">
+          Class of title
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="title in getAllTitles" 
+        :key="title['Title Number']" 
+        item-class="table-row"
+        @click="redirectDetail(title['Title Number'])"
+      >
+        <td>{{ title['Title Number'] }}</td>
+        <td>{{ title['Tenure'] }}</td>
+      </tr>
+    </tbody>
+  </v-table>
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { mapGetters } from 'vuex'
 
 export default {
@@ -52,8 +44,6 @@ export default {
     };
   },
 
-  // mounted() {    console.log(this.$store.state.titleList) },
-
   methods: {
     async fetchData() {
       this.loading = true;
@@ -63,21 +53,14 @@ export default {
         .then(response => response.json())
         .then(response => this.$store.commit('initTitles', response))
         .catch(err => console.error(err));
+    },
+    redirectDetail(titleNumber) {
+      this.$router.push({ path: '/titles/'+titleNumber });
     }
   },
 
   mounted() {
     this.fetchData();
-  },
-  
-  data () {
-    return {
-      titles: [
-        { title_number: 'content2', class: 'content2class' },
-        { title_number: 'content1', class: 'content1class' },
-        { title_number: 'content3', class: 'content3class' },
-      ]
-    }
   },
 
   computed: {
@@ -88,7 +71,9 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+.table-row:hover {
+  background-color: blue;
+}
 </style>
 

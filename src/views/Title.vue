@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row style="border: 1px solid #000;">
       <v-col>
         <v-btn to="/list">Back</v-btn>
       </v-col>
@@ -17,10 +17,9 @@
         />
       </v-col>
       <v-col>
-        <TitleMapView 
+        <MapPane
           :x="titleDetails['X']" 
           :y="titleDetails['Y']" 
-          :address="titleDetails['Property Address']" 
         />
       </v-col>
     </v-row>
@@ -29,18 +28,24 @@
 
 <script>
 import TitleDetails from '../components/TitleDetails.vue';
-import TitleMapView from '../components/TitleMapView.vue';
+import MapPane from '../components/MapPane.vue';
 import store from '@/store'
 
   export default {
     name: "TitleView",
     components: {
       TitleDetails,
-      TitleMapView
+      MapPane,
+    },
+    computed: {
+      id() {
+        return this.$route.params.id.toString();
+      }
     },
     data () {
       return {
-        titleDetails: {}
+        // titleDetails: store.getters.getTitleByTitleNumber(this.id)
+        titleDetails: store.getters.getTitleByTitleNumber(this.$route.params.id.toString())
       }
     },
     methods: {
