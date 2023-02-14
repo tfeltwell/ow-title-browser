@@ -22,7 +22,7 @@
       TitlePagination
     },
     setup() {
-      const pageSize = ref(10);
+      const pageSize = ref(5);
       const pagePos = ref(0);
 
       return {
