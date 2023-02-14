@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 
-import { getters } from './store';
-const { getTitleById } = getters;
+import Store from './store';
+console.log(Store);
+// const { getTitleById } = getters;
 
 // Mounting isn't working right, need to come back to this: https://test-utils.vuejs.org/guide/advanced/vuex.html#testing-with-a-mock-store
 
