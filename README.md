@@ -15,11 +15,15 @@ Small Vue webapp for viewing property titles based on the Land Registry data for
 ```sh
 npm install
 ```
-2. Run Development server
+3. Create `.env` in root folder and populate with Google Maps API key as follows:
+```
+VITE_MAPS_KEY = <API key>
+```
+4. Run Development server
 ```sh
 npm run dev
 ```
-3. Navigate to [http://localhost:5173/](http://localhost:5173/)
+5. Navigate to [http://localhost:5173/](http://localhost:5173/)
 
 ## Testing
 ### Run Unit Tests with [Vitest](https://vitest.dev/)
