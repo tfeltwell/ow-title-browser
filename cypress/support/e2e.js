@@ -21,7 +21,8 @@ import './commands'
 
 
 // "exports is not defined"
-Cypress.on('uncaught:exception', (err, runnable) => {
+// eslint-disable-next-line no-undef
+Cypress.on('uncaught:exception', (err) => {
   // we expect Google Maps vue3 plugin to throw "exports is not defined"
   // and don't want to fail the test so we return false (functionality fine)
   if (err.message.includes("exports is not defined")) {
